@@ -14,7 +14,7 @@ SECRET_KEY = 'h%6gjnf1o0yz*0r3i^6)=x=wa&ax2pnav$&3a81fqyp5yvb6xg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -59,7 +59,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cfehome.wsgi.application'
-ASGI_APPLICATION = "myproject.routing.application"
+ASGI_APPLICATION = "cfehome.routing.application"
 
 
 # Database

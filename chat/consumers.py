@@ -6,6 +6,6 @@ from channels.db import database_sync_to_async
 
 from .models import Thread, ChatMessage
 
-class ChatConsumet(AsyncConsumer):
+class ChatConsumer(AsyncConsumer):
     def websocket_connect(self, event):
         print("connected",event)
