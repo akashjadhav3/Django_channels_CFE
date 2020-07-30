@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
 
 <script>
 // websocket scripts
@@ -33,7 +34,7 @@ if (loc.protocol == 'https:'){
     wsStart = 'wss://' //used for production
 }
 var endpoint = wsStart + loc.host + loc.pathname
-var socket = new WebSocket(endpoint)
+var socket = new ReconnectingWebSocket(endpoint)
 
 
 // Display Frontend page data    // This is msg Receiving
