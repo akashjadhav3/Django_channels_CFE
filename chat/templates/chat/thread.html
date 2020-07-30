@@ -11,6 +11,7 @@
 </ul>
 
 <form id='form-data' method='POST'> {% csrf_token %}
+    <input type='hidden' id='myUsername' value='{{ user.username }}' />
 {{form.as_p }}
 <input type='submit' class='btn btn-primary'/>
 </form>
@@ -24,24 +25,31 @@
 var loc = window.location
 var formData = $("#form-data")
 var msgInput = $("#id_message")
+var chatHolder = $("#chat-items")
+var me = $("#myUsername").val()
 
 var wsStart = 'ws://'
 if (loc.protocol == 'https:'){
     wsStart = 'wss://' //used for production
 }
 var endpoint = wsStart + loc.host + loc.pathname
-
 var socket = new WebSocket(endpoint)
+
+
+// Display Frontend page data    // This is msg Receiving
 socket.onmessage = function(e){
     console.log("message",e)
+    var chatDataMsg = JSON.parse(e.data)
+    chatHolder.append("<li>"+ chatDataMsg.message + " via "+ chatDataMsg.username + "</li>")
 }
 
-// send data to consumer.py def websocket_receive
+// send data to consumer.py def websocket_receive   // This is msg sending
 socket.onopen = function(e){
     console.log("open",e)
     formData.submit(function(event){
         event.preventDefault()
         var msgText = msgInput.val() //get input value
+        chatHolder.append("<li>"+ msgText + " via " + me +" I "+"</li>")
         //var formDataSerialized = formData.serialize() // also use to get value but complicated
         // socket.send(msgText)    // normal data send
 
