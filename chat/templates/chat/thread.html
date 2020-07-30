@@ -10,7 +10,7 @@
 {% endfor %}
 </ul>
 
-<form id='form' method='POST'> {% csrf_token %}
+<form id='form-data' method='POST'> {% csrf_token %}
 {{form.as_p }}
 <input type='submit' class='btn btn-primary'/>
 </form>
@@ -22,6 +22,8 @@
 <script>
 // websocket scripts
 var loc = window.location
+var formData = $("#form-data")
+var msgInput = $("#id_message")
 
 var wsStart = 'ws://'
 if (loc.protocol == 'https:'){
@@ -33,8 +35,23 @@ var socket = new WebSocket(endpoint)
 socket.onmessage = function(e){
     console.log("message",e)
 }
+
+// send data to consumer.py def websocket_receive
 socket.onopen = function(e){
     console.log("open",e)
+    formData.submit(function(event){
+        event.preventDefault()
+        var msgText = msgInput.val() //get input value
+        //var formDataSerialized = formData.serialize() // also use to get value but complicated
+        // socket.send(msgText)    // normal data send
+
+        // send data to json
+        var finalData = {
+            "message": msgText
+        }
+        socket.send(JSON.stringify(finalData))
+        formData[0].reset()
+    })
 }
 socket.onerror = function(e){
     console.log("error",e)
