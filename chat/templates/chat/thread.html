@@ -49,7 +49,7 @@ socket.onopen = function(e){
     formData.submit(function(event){
         event.preventDefault()
         var msgText = msgInput.val() //get input value
-        chatHolder.append("<li>"+ msgText + " via " + me +" I "+"</li>")
+        // chatHolder.append("<li>"+ msgText + " via " + me +" I "+"</li>")
         //var formDataSerialized = formData.serialize() // also use to get value but complicated
         // socket.send(msgText)    // normal data send
 
