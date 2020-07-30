@@ -24,6 +24,11 @@ class ChatConsumer(AsyncConsumer):
 
     async def websocket_receive(self, event):
         print("received",event)
+        front_text = event.get("text", None)
+        if front_text is not None:
+            loaded_dict_data = json.loads(front_text)
+            msg = loaded_dict_data.get('message')
+            print(msg)
 
     async def websocket_disconnect(self, event):
         print("disconnected",event)
